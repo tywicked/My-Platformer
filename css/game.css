@@ -4,12 +4,12 @@
 .background td { padding: 0;          }
 .lava          { background: orange; }
 .wall          { background-image: url("http://makepixelart.com/peoplepods/files/images/2152.original.png");   }
-.floater { background: green; }
+.floater { background-color: green; }
 
 .actor   { position: absolute;  }
 .coin    { background-color: yellow; }
 .player  { background-color: red; }
- }
+
 
 .game {
   overflow: hidden;

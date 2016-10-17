@@ -139,7 +139,6 @@ var scale = 20;
 DOMDisplay.prototype.drawBackground = function() {
   var table = elt("table", "background");
   table.style.width = this.level.width * scale + "px";
-
   // Assign a class to new row element directly from the string from
   // each tile in grid
   this.level.grid.forEach(function(row) {
