@@ -1,14 +1,15 @@
-.background    { background-color: blue;
+.background    { background-image: url("http://www.easyfreepatterns.com/patterns/6/made-a-simple-background-pattern-that-tiles-please-credit-if-you--6112.png");
                  table-layout: fixed;
                  border-spacing: 0;   }
 .background td { padding: 0;          }
 .lava          { background: orange; }
-.wall          { background: white;   }
+.wall          { background-image: url("http://makepixelart.com/peoplepods/files/images/2152.original.png");   }
+.floater { background: green; }
 
 .actor   { position: absolute;  }
 .coin    { background-color: yellow; }
 .player  { background-color: red; }
-.floater { background-color: green; }
+ }
 
 .game {
   overflow: hidden;
