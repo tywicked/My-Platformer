@@ -7,7 +7,6 @@
 .floater { background-color: green; }
 
 .actor   { position: absolute;  }
-.coin    { background-color: yellow; }
 .player  { background-color: red; }
 
 
@@ -18,9 +17,5 @@
   position: relative;
 }
 
-.lost .player {
-  background: rgb(160, 64, 64);
-}
-.won .player {
-  box-shadow: -4px -7px 8px white, 4px -7px 8px white;
-}
+
+
