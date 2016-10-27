@@ -8,6 +8,8 @@
 
 .actor   { position: absolute;  }
 .player  { background-color: red; }
+.coin 	 { background-color: yellow;}
+.something {background-color: purple;}
 
 
 .game {
