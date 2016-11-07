@@ -1,16 +1,16 @@
-.background    { background-image: url("http://www.easyfreepatterns.com/patterns/6/made-a-simple-background-pattern-that-tiles-please-credit-if-you--6112.png");
+.background    { background-image: url("http://www.easyfreepatterns.com/patterns/25/kirby&hearts-pixel-backgrounds-i-made-for-my-blog-&8255-you-25642.png");
                  table-layout: fixed;
                  border-spacing: 0;   }
 .background td { padding: 0;          }
-.lava          { background: orange; }
-.wall          { background-image: url("http://makepixelart.com/peoplepods/files/images/2152.original.png");   }
-.floater { background-color: green; }
+.lava          { background: linear-gradient(yellow, red); }
+.toxic         { background: linear-gradient(purple, green); }
+.wall          { background-image: url("http://orig00.deviantart.net/e4dd/f/2011/104/9/e/pixel_art_floor_pattern_1_by_ifanyonecould-d3dz2hf.png");   }
+.door          { background: brown; }
+.drop		   { background: linear-gradient(blue, white); }
 
-.actor   { position: absolute;  }
-.player  { background-color: red; }
-.coin 	 { background-color: yellow;}
-.something {background-color: purple;}
-
+.actor  { position: absolute;  }
+.coin   { background: radial-gradient(circle, white, yellow, black); }
+.player { background: linear-gradient(red, blue); }
 
 .game {
   overflow: hidden;
@@ -19,5 +19,11 @@
   position: relative;
 }
 
+.lost .player {
+  background: linear-gradient(red, blue);
+}
+.won .player {
+  box-shadow: -4px -7px 8px white, 4px -7px 8px white;
+}
 
 
