@@ -578,7 +578,7 @@ function runGame(plans, Display) {
 	  else if(n > 3) {
 		coins = curCoins;
 		playerXSpeed = 8; 
-		document.getElementById("coinamount").innerHTML = "Coins: <font color=\"darkgoldenrod\">" + coins + "/38" "</font>";
+		document.getElementById("coinamount").innerHTML = "Coins: <font color=\"darkgoldenrod\">" + coins + "/38" + "</font>";
 		document.getElementById("deathamount").innerHTML = "h1>  Congratulations you won! With only  <font color=\"red\">" + deaths + "</font>deaths</h>";
 	  }
     });
