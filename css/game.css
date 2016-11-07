@@ -5,12 +5,12 @@
 .lava          { background: linear-gradient(yellow, red); }
 .toxic         { background: linear-gradient(purple, green); }
 .wall          { background-image: url("http://orig00.deviantart.net/e4dd/f/2011/104/9/e/pixel_art_floor_pattern_1_by_ifanyonecould-d3dz2hf.png");   }
-.door          { background: brown; }
-.drop		   { background: linear-gradient(blue, white); }
+.door          { background: linear-gradient(green, white, green); }
 
 .actor  { position: absolute;  }
 .coin   { background: radial-gradient(circle, white, yellow, black); }
 .player { background: linear-gradient(red, blue); }
+.pickup { background: radial-gradient(circle, blue, yellow, blue); }
 
 .game {
   overflow: hidden;
@@ -19,6 +19,10 @@
   position: relative;
 }
 
+
+.pickup .player {
+  background: linear-gradient(blue, red);
+}
 .lost .player {
   background: linear-gradient(red, blue);
 }

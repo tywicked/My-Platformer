@@ -3,7 +3,8 @@ var actorChars = {
   "o": Coin, // A coin will wobble up and down
   "=": Lava, "|": Lava, "v": Lava,
   "t": Toxic, 
-  "f": Drop
+  "p": Pickup,
+  "d": Door
   
 };
 
@@ -78,6 +79,12 @@ Vector.prototype.times = function(factor) {
 };
 
 
+function Door(pos) {
+	this.pos = pos;
+	this.size = new Vector (1,1);
+}
+Door.prototype.type = "door";
+
 // A Player has a size, speed and position.
 function Player(pos) {
   this.pos = pos.plus(new Vector(0, -0.5));
@@ -94,6 +101,13 @@ function Coin(pos) {
   this.wobble = Math.random() * Math.PI * 2;
 }
 Coin.prototype.type = "coin";
+
+function Pickup(pos) {
+  this.basePos = this.pos = pos.plus(new Vector(0.2, 0.1));
+  this.size = new Vector(0.6, 0.6);
+  this.wobble = Math.random() * Math.PI * 2;
+}
+Pickup.prototype.type = "pickup";
 
 // Lava is initialized based on the character, but otherwise has a
 // size and position
@@ -242,10 +256,12 @@ Level.prototype.obstacleAt = function(pos, size) {
   var yEnd = Math.ceil(pos.y + size.y);
 
   // Consider the sides and top and bottom of the level as walls
-  if (xStart < 0 || xEnd > this.width || yStart < 0)
+  if (xStart < 0 || xEnd > this.width || yStart < 0) {
     return "wall";
+	return door;}
   if (yEnd > this.height)
     return "lava";
+  
 
   // Check each grid position starting at yStart, xStart
   // for a possible obstacle (non null value)
@@ -305,6 +321,7 @@ Lava.prototype.act = function(step, level) {
     this.speed = this.speed.times(-1);
 };
 
+var beginning = new Vector (5, 15);
 
 var maxStep = 0.05;
 
@@ -316,10 +333,6 @@ Coin.prototype.act = function(step) {
   this.pos = this.basePos.plus(new Vector(0, wobblePos));
 };
 
-var maxStep = 0.05;
-
-var wobbleSpeed = 8, wobbleDist = 0.07;
-
 Toxic.prototype.act = function(step) {
   this.wobble += step * wobbleSpeed;
   var wobblePos = Math.sin(this.wobble) * wobbleDist;
@@ -330,6 +343,17 @@ Drop.prototype.act = function(step) {
   this.wobble += step * wobbleSpeed;
   var wobblePos = Math.sin(this.wobble) * wobbleDist;
   this.pos = this.basePos.plus(new Vector(0, wobblePos));
+};
+
+Pickup.prototype.act = function(step) {
+  this.wobble += step * wobbleSpeed;
+  var wobblePos = Math.sin(this.wobble) * wobbleDist;
+  this.pos = this.basePos.plus(new Vector(0, wobblePos));
+
+};
+
+Door.prototype.act = function(step) {
+	this.size = new Vector (1,1);
 };
 
 var maxStep = 0.05;
@@ -394,7 +418,13 @@ Player.prototype.act = function(step, level, keys) {
     this.size.y -= step;
 	this.size.x += step;
   }
+  
+  
+   if (level.status == "won") {
+	 this.size.y -= step;
+   }
 };
+
 
 Level.prototype.playerTouched = function(type, actor) {
 
@@ -412,22 +442,49 @@ Level.prototype.playerTouched = function(type, actor) {
    this.actors = this.actors.filter(function(other) {
 	  return other != actor;
     });
-	
+  }
 	
     // If there aren't any coins left, player wins
-  if (!this.actors.some(function(actor) {
+ /* if (!this.actors.some(function(actor) {
            return actor.type == "coin";
          })) {
       this.status = "won";
       this.finishDelay = 1;
     }
+	}*/
+  
+  else if (type == "toxic") {
+	playerXSpeed = 5;
+	console.log(playerXSpeed);
+	
+	this.actors = this.actors.filter(function(other) {
+	  return other != actor;
+  });
+  }
+	
+  else if (type == "pickup") {
 
+			playerXSpeed = 14;
+		
+		this.actors = this.actors.filter(function(other) {
+		return other != actor;
+		this.status = "pickup";
+    });
   }
-  else if (type = "toxic") {
-	Player.pos = Drop.basePos;
+  
+  else if (type == "door") {
+	  //this.actors = this.actors.filter(function(other) {
+	  //return other != actor;
+    //});
 	
-	
-  }
+  //if (!this.actors.some(function(actor) {
+           //return actor.type == "door";
+         //})) {
+      this.status = "won";
+      this.finishDelay = 1;
+    }
+  //}
+  
 };
 
 // Arrow key codes for readibility
@@ -502,12 +559,26 @@ function runGame(plans, Display) {
     // Create a new level using the nth element of array plans
     // Pass in a reference to Display function, DOMDisplay (in index.html).
     runLevel(new Level(plans[n]), Display, function(status) {
-      if (status == "lost")
-        startLevel(n);
-      else if (n < plans.length - 1)
-        startLevel(n + 1);
-      else
-        document.getElementById("deathamount").innerHTML = "h1>  Congratulations you won! With only  <font color=\"red\">" + deaths + "</font>deaths</h>";
+      if (status == "lost"){
+		coins = 0;
+		playerXSpeed = 7;
+		document.getElementById("coinamount").innerHTML = "Coins: <font color=\"darkgoldenrod\">" + coins + "</font>";
+		startLevel(n);
+		}
+ 	  
+	  else if (n < plans.length - 1){
+        coins = 0;
+		playerXSpeed = 7;
+		document.getElementById("coinamount").innerHTML = "Coins: <font color=\"darkgoldenrod\">" + coins + "</font>";
+		startLevel(n + 1);
+	  }
+	  
+	  else {
+		coins = 0;
+		playerXSpeed = 7; 
+		document.getElementById("coinamount").innerHTML = "Coins: <font color=\"darkgoldenrod\">" + coins + "</font>";
+		document.getElementById("deathamount").innerHTML = "h1>  Congratulations you won! With only  <font color=\"red\">" + deaths + "</font>deaths</h>";
+	  }
     });
   }
   startLevel(0);
