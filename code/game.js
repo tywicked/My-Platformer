@@ -10,6 +10,7 @@ var actorChars = {
 
 var deaths = 0;
 var coins = 0;
+var curCoins = 0;
 
 function Level(plan) {
   // Use the length of a single row to set the width of the level
@@ -480,7 +481,8 @@ Level.prototype.playerTouched = function(type, actor) {
   //if (!this.actors.some(function(actor) {
            //return actor.type == "door";
          //})) {
-      this.status = "won";
+	  curCoins = coins; 
+	  this.status = "won";
       this.finishDelay = 1;
     }
   //}
@@ -560,23 +562,23 @@ function runGame(plans, Display) {
     // Pass in a reference to Display function, DOMDisplay (in index.html).
     runLevel(new Level(plans[n]), Display, function(status) {
       if (status == "lost"){
-		coins = 0;
-		playerXSpeed = 7;
+		coins = curCoins;
+		playerXSpeed = 8;
 		document.getElementById("coinamount").innerHTML = "Coins: <font color=\"darkgoldenrod\">" + coins + "</font>";
 		startLevel(n);
 		}
  	  
 	  else if (n < plans.length - 1){
-        coins = 0;
-		playerXSpeed = 7;
+        coins = curCoins;
+		playerXSpeed = 8;
 		document.getElementById("coinamount").innerHTML = "Coins: <font color=\"darkgoldenrod\">" + coins + "</font>";
 		startLevel(n + 1);
 	  }
 	  
-	  else {
-		coins = 0;
-		playerXSpeed = 7; 
-		document.getElementById("coinamount").innerHTML = "Coins: <font color=\"darkgoldenrod\">" + coins + "</font>";
+	  else if(n > 3) {
+		coins = curCoins;
+		playerXSpeed = 8; 
+		document.getElementById("coinamount").innerHTML = "Coins: <font color=\"darkgoldenrod\">" + coins + "/38" "</font>";
 		document.getElementById("deathamount").innerHTML = "h1>  Congratulations you won! With only  <font color=\"red\">" + deaths + "</font>deaths</h>";
 	  }
     });
